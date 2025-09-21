@@ -1,35 +1,33 @@
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: insureme
+  name: healthcare
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: insureme
+      app: healthcare
   template:
     metadata:
       labels:
-        app: insureme
+        app: healthcare
     spec:
       containers:
-        - name: insurance
-          image: vikuldocker/demoinsurancevikul:1.0
-          ports:
-            - containerPort: 8081
-          env:
-            - name: PORT
-              value: "8081"
+      - name: healthcare
+        image: anjan8055/hospital01:latest
+        ports:
+        - containerPort: 8082
+
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: insureme
+  name: healthcare
 spec:
+  selector:
+    app: healthcare
   type: NodePort
   ports:
-    - port: 8081
-      targetPort: 8081
-  selector:
-    app: insureme
+    - port: 80
+      targetPort: 8082
+      nodePort: 30007
